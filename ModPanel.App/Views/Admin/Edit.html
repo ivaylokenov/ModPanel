@@ -1,0 +1,28 @@
+﻿<main>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col col-md-6">
+                <div class="text-center">
+                    <h1 class="display-3">Edit Post</h1>
+                </div>
+                <hr />
+
+                <form method="post">
+
+                    <div class="form-group row">
+                        <label class="col-form-label" for="title">Title</label>
+                        <input required type="text" name="Title" class="form-control" id="title" value="{{{title}}}" />
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label" for="content">Content</label>
+                        <textarea required class="form-control" name="Content" id="content" rows="20">{{{content}}}</textarea>
+                    </div>
+
+                    <input type="submit" class="btn btn-warning btn-lg btn-block" value="Edit" />
+                </form>
+                <br />
+            </div>
+        </div>
+    </div>
+</main>

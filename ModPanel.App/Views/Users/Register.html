@@ -1,0 +1,49 @@
+﻿<main>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col col-md-6">
+                <div class="text-center">
+                    <h1 class="display-3">Register</h1>
+                </div>
+                <hr />
+
+                <form method="post">
+
+                    <div class="form-group row">
+                        <label class="col-form-label" for="email">Email</label>
+                        <input required name="Email" type="email" class="form-control" id="email" placeholder="ivaylo@example.com" />
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label" for="password">Password</label>
+                        <input required name="Password" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" id="password" class="form-control" placeholder="Password" />
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label" for="confirm-password">Confirm Password</label>
+                        <input required name="ConfirmPassword" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" id="confirm-passworn" class="form-control" placeholder="Confirm Password" />
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label" for="position">Position</label>
+                        <select required name="Position" id="position" class="form-control">
+                            <option value="0" selected>Developer</option>
+                            <option value="1">Designer</option>
+                            <option value="2">Technical Support</option>
+                            <option value="3">Technical Trainer</option>
+                            <option value="4">HR</option>
+                            <option value="5">Marketing Specialist</option>
+                        </select>
+                    </div>
+
+                    <p class="text-center">
+                        Your submission needs to be approved by an administrator!
+                    </p>
+
+                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Register" />
+                </form>
+                <br />
+            </div>
+        </div>
+    </div>
+</main>
