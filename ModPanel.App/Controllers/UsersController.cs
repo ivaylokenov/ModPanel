@@ -2,7 +2,6 @@
 {
     using Data.Models;
     using Models.Users;
-    using Services;
     using Services.Contracts;
     using SimpleMvc.Framework.Attributes.Methods;
     using SimpleMvc.Framework.Contracts;
@@ -14,11 +13,11 @@
         private const string UserIsNotApprovedError = "You must wait for your registration to be approved!";
         private const string LoginError = "<p>Invalid credentials.</p>";
 
-        private IUserService users;
+        private readonly IUserService users;
 
-        public UsersController()
+        public UsersController(IUserService users)
         {
-            this.users = new UserService();
+            this.users = users;
         }
 
         public IActionResult Register() => this.View();

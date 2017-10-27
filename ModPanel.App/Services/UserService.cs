@@ -9,86 +9,72 @@
 
     public class UserService : IUserService
     {
+        private readonly ModPanelDbContext db;
+
+        public UserService(ModPanelDbContext db)
+        {
+            this.db = db;
+        }
+
         public bool Create(string email, string password, PositionType position)
         {
-            using (var db = new ModPanelDbContext())
+            if (this.db.Users.Any(u => u.Email == email))
             {
-                if (db.Users.Any(u => u.Email == email))
-                {
-                    return false;
-                }
-
-                var isAdmin = !db.Users.Any();
-
-                var user = new User
-                {
-                    Email = email,
-                    Password = password,
-                    IsAdmin = isAdmin,
-                    Position = position,
-                    IsApproved = isAdmin
-                };
-
-                db.Add(user);
-                db.SaveChanges();
-
-                return true;
+                return false;
             }
+
+            var isAdmin = !this.db.Users.Any();
+
+            var user = new User
+            {
+                Email = email,
+                Password = password,
+                IsAdmin = isAdmin,
+                Position = position,
+                IsApproved = isAdmin
+            };
+
+            this.db.Add(user);
+            this.db.SaveChanges();
+
+            return true;
         }
 
         public bool UserExists(string email, string password)
-        {
-            using (var db = new ModPanelDbContext())
-            {
-                return db
-                    .Users
-                    .Any(u => u.Email == email && u.Password == password);
-            }
-        }
+            => this.db
+                .Users
+                .Any(u => u.Email == email && u.Password == password);
 
         public bool UserIsApproved(string email)
-        {
-            using (var db = new ModPanelDbContext())
-            {
-                return db
-                    .Users
-                    .Any(u => u.Email == email && u.IsApproved);
-            }
-        }
+            => this.db
+                .Users
+                .Any(u => u.Email == email && u.IsApproved);
 
         public IEnumerable<AdminUserModel> All()
-        {
-            using (var db = new ModPanelDbContext())
-            {
-                return db
-                    .Users
-                    .Select(u => new AdminUserModel
-                    {
-                        Id = u.Id,
-                        Email = u.Email,
-                        Position = u.Position,
-                        IsApproved = u.IsApproved,
-                        Posts = u.Posts.Count
-                    })
-                    .ToList();
-            }
-        }
+            => this.db
+                .Users
+                .Select(u => new AdminUserModel
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    Position = u.Position,
+                    IsApproved = u.IsApproved,
+                    Posts = u.Posts.Count
+                })
+                .ToList();
 
         public string Approve(int id)
         {
-            using (var db = new ModPanelDbContext())
+            var user = this.db.Users.Find(id);
+
+            if (user != null)
             {
-                var user = db.Users.Find(id);
+                user.IsApproved = true;
 
-                if (user != null)
-                {
-                    user.IsApproved = true;
-
-                    db.SaveChanges();
-                }
-
-                return user?.Email;
+                this.db.SaveChanges();
             }
+
+            return user?.Email;
         }
     }
 }

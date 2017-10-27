@@ -14,7 +14,7 @@
 
         protected BaseController()
         {
-            this.logs = new LogService();
+            this.logs = new LogService(new ModPanelDbContext());
 
             this.ViewModel["anonymousDisplay"] = "flex";
             this.ViewModel["userDisplay"] = "none";

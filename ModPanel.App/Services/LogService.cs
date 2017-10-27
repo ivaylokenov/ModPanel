@@ -9,37 +9,36 @@
 
     public class LogService : ILogService
     {
+        private readonly ModPanelDbContext db;
+
+        public LogService(ModPanelDbContext db)
+        {
+            this.db = db;
+        }
+
         public void Create(string admin, LogType type, string additionalInformation)
         {
-            using (var db = new ModPanelDbContext())
+            var log = new Log
             {
-                var log = new Log
-                {
-                    Admin = admin,
-                    Type = type,
-                    AdditionalInformation = additionalInformation
-                };
+                Admin = admin,
+                Type = type,
+                AdditionalInformation = additionalInformation
+            };
 
-                db.Logs.Add(log);
-                db.SaveChanges();
-            }
+            this.db.Logs.Add(log);
+            this.db.SaveChanges();
         }
 
         public IEnumerable<LogModel> All()
-        {
-            using (var db = new ModPanelDbContext())
-            {
-                return db
-                    .Logs
-                    .OrderByDescending(l => l.Id)
-                    .Select(l => new LogModel
-                    {
-                        Admin = l.Admin,
-                        Type = l.Type,
-                        AdditionalInformation = l.AdditionalInformation
-                    })
-                    .ToList();
-            }
-        }
+            => this.db
+                .Logs
+                .OrderByDescending(l => l.Id)
+                .Select(l => new LogModel
+                {
+                    Admin = l.Admin,
+                    Type = l.Type,
+                    AdditionalInformation = l.AdditionalInformation
+                })
+                .ToList();
     }
 }

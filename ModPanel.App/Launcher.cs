@@ -1,5 +1,6 @@
 ﻿namespace ModPanel.App
 {
+    using Infrastructure;
     using Microsoft.EntityFrameworkCore;
     using ModPanel.App.Data;
     using SimpleMvc.Framework;
@@ -19,7 +20,7 @@
         public static void Main()
             => MvcEngine.Run(new WebServer(
                 1337, 
-                new ControllerRouter(),
+                DependencyControllerRouter.Get(),
                 new ResourceRouter()));
     }
 }
