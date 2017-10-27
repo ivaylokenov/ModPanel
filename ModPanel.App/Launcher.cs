@@ -1,6 +1,7 @@
 ﻿namespace ModPanel.App
 {
     using Infrastructure;
+    using Infrastructure.Mapping;
     using Microsoft.EntityFrameworkCore;
     using ModPanel.App.Data;
     using SimpleMvc.Framework;
@@ -15,6 +16,8 @@
             {
                 db.Database.Migrate();
             }
+
+            AutoMapperConfiguration.Initialize();
         }
 
         public static void Main()

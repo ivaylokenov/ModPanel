@@ -1,5 +1,6 @@
 ﻿namespace ModPanel.App.Services
 {
+    using AutoMapper.QueryableExtensions;
     using Contracts;
     using Data;
     using Data.Models;
@@ -36,11 +37,7 @@
         public IEnumerable<PostListingModel> All()
             => this.db
                 .Posts
-                .Select(p => new PostListingModel
-                {
-                    Id = p.Id,
-                    Title = p.Title
-                })
+                .ProjectTo<PostListingModel>()
                 .ToList();
 
         public IEnumerable<HomeListingModel> AllWithDetails(string search = null)
@@ -54,13 +51,7 @@
 
             return query
                 .OrderByDescending(p => p.Id)
-                .Select(p => new HomeListingModel
-                {
-                    Title = p.Title,
-                    Content = p.Content,
-                    CreatedBy = p.User.Email,
-                    CreatedOn = p.CreatedOn
-                })
+                .ProjectTo<HomeListingModel>()
                 .ToList();
         }
 
@@ -68,11 +59,7 @@
             => this.db
                 .Posts
                 .Where(p => p.Id == id)
-                .Select(p => new PostModel
-                {
-                    Title = p.Title,
-                    Content = p.Content
-                })
+                .ProjectTo<PostModel>()
                 .FirstOrDefault();
 
         public void Update(int id, string title, string content)

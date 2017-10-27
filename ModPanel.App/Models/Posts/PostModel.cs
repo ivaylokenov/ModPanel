@@ -1,9 +1,11 @@
 ﻿namespace ModPanel.App.Models.Posts
 {
+    using Data.Models;
+    using Infrastructure.Mapping;
     using Infrastructure.Validation;
     using Infrastructure.Validation.Posts;
 
-    public class PostModel
+    public class PostModel : IMapFrom<Post>
     {
         [Required]
         [Title]

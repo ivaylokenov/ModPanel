@@ -1,5 +1,6 @@
 ﻿namespace ModPanel.App.Services
 {
+    using AutoMapper.QueryableExtensions;
     using Contracts;
     using Data;
     using Data.Models;
@@ -53,14 +54,7 @@
         public IEnumerable<AdminUserModel> All()
             => this.db
                 .Users
-                .Select(u => new AdminUserModel
-                {
-                    Id = u.Id,
-                    Email = u.Email,
-                    Position = u.Position,
-                    IsApproved = u.IsApproved,
-                    Posts = u.Posts.Count
-                })
+                .ProjectTo<AdminUserModel>()
                 .ToList();
 
         public string Approve(int id)

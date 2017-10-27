@@ -1,5 +1,6 @@
 ﻿namespace ModPanel.App.Services
 {
+    using AutoMapper.QueryableExtensions;
     using Contracts;
     using Data;
     using Data.Models;
@@ -33,12 +34,7 @@
             => this.db
                 .Logs
                 .OrderByDescending(l => l.Id)
-                .Select(l => new LogModel
-                {
-                    Admin = l.Admin,
-                    Type = l.Type,
-                    AdditionalInformation = l.AdditionalInformation
-                })
+                .ProjectTo<LogModel>()
                 .ToList();
     }
 }

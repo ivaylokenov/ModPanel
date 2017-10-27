@@ -1,9 +1,10 @@
 ﻿namespace ModPanel.App.Models.Logs
 {
     using Data.Models;
+    using Infrastructure.Mapping;
     using System;
 
-    public class LogModel
+    public class LogModel : IMapFrom<Log>
     {
         public string Admin { get; set; }
 
